@@ -1,0 +1,10 @@
+
+## ADSupport
+# WITH_NETCDF:=YES
+# WITH_JPEG:=YES
+# WITH_ZLIB:=YES
+# WITH_SZIP:=YES
+# export WITH_NETCDF
+# export WITH_JPEG
+# export WITH_ZLIB
+# export WITH_TIFF
