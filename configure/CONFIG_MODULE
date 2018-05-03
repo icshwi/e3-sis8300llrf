@@ -1,9 +1,9 @@
 #
 EPICS_MODULE_NAME:=sis8300llrf
 
-EPICS_MODULE_TAG:=master
+EPICS_MODULE_TAG:=v3.4.3
 #
-E3_MODULE_VERSION:=master
+E3_MODULE_VERSION:=3.4.3
 
 
 # ONLY IF this module has the sequencer dependency. However,

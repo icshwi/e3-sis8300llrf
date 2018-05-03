@@ -29,9 +29,13 @@
 
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 
-# APP:=calcApp
+#APP:=calcApp
 # APPDB:=$(APP)/Db
-# APPSRC:=$(APP)/src
+APPSRC:=src
+
+asyn_VERSION:=4270
+
+SOURCES += $(wildcard $(APPSRC)/*.cpp)
 
 
 # USR_INCLUDES += -I$(where_am_I)$(APPSRC)
@@ -110,7 +114,8 @@ include $(E3_REQUIRE_TOOLS)/driver.makefile
 ##
 # USR_LIBS += boost_regex
 # USR_LIBS += readline
-# USR_LIBS += xml2
+USR_INCLUDES += -I/usr/include/libxml2
+USR_LIBS += xml2
 
 #
 
