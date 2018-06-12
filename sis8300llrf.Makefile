@@ -34,13 +34,33 @@ ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
 endif
 
+ifneq ($(strip $(LOKI_DEP_VERSION)),)
+loki_VERSION=$(LOKI_DEP_VERSION)
+endif
+
+ifneq ($(strip $(NDS_DEP_VERSION)),)
+nds_VERSION=$(NDS_DEP_VERSION)
+endif
+
+ifneq ($(strip $(SIS8300_DEP_VERSION)),)
+sis8300_VERSION=$(SIS8300_DEP_VERSION)
+endif
+
+ifneq ($(strip $(SIS8300DRV_DEP_VERSION)),)
+sis8300drv_VERSION=$(SIS8300DRV_DEP_VERSION)
+endif
+
+ifneq ($(strip $(SIS8300LLRFDRV_DEP_VERSION)),)
+sis8300llrfdrv_VERSION=$(SIS8300LLRFDRV_DEP_VERSION)
+endif
+
 
 EXCLUDE_ARCHS += linux-ppc64e6500 
 
 
 
 APP:=.
-APPDB:=$(APP)/Db
+APPDB:=$(APP)/db
 APPSRC:=$(APP)/src
 
 HEADERS += $(wildcard $(APPSRC)/*.h)
@@ -48,6 +68,8 @@ SOURCES += $(wildcard $(APPSRC)/*.cpp)
 
 #DBDS  += sis8300llrf-procedure.dbd
 
+
+TEMPLATES += $(wildcard $(APPDB)/*.template)
 
 ## SYSTEM LIBS 
 ##
@@ -68,6 +90,10 @@ MSI = $(EPICS_BASE_HOST_BIN)/msi
 USR_DBFLAGS += -I . -I ..
 USR_DBFLAGS += -I $(EPICS_BASE)/db
 USR_DBFLAGS += -I $(APPDB)
+
+USR_DBFLAGS += -I $(E3_SITELIBS_PATH)/sis8300_$(SIS8300_DEP_VERSION)_db
+
+
 
 SUBS=$(wildcard $(APPDB)/*.substitutions)
 TMPS=$(wildcard $(APPDB)/*.template)
