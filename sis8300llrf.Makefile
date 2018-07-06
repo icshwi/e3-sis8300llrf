@@ -70,7 +70,9 @@ SOURCES += $(wildcard $(APPSRC)/*.cpp)
 
 
 TEMPLATES += $(wildcard $(APPDB)/*.template)
-
+TEMPLATES += $(APPDB)/sis8300llrf.db
+TEMPLATES += $(APPDB)/sis8300llrf-SpecOp.db
+TEMPLATES += $(APPDB)/sis8300llrf-Register.db
 ## SYSTEM LIBS 
 ##
 # USR_LIBS += boost_regex
