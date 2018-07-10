@@ -73,6 +73,7 @@ TEMPLATES += $(wildcard $(APPDB)/*.template)
 TEMPLATES += $(APPDB)/sis8300llrf.db
 TEMPLATES += $(APPDB)/sis8300llrf-SpecOp.db
 TEMPLATES += $(APPDB)/sis8300llrf-Register.db
+TEMPLATES += $(APPDB)/sis8300llrf-Setup.db
 ## SYSTEM LIBS 
 ##
 # USR_LIBS += boost_regex
