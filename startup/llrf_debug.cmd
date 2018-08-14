@@ -13,7 +13,7 @@ epicsEnvSet("AI_SMNM_MAX"              "0x60000")
 epicsEnvSet("AI_SMNM_DEFOPT"           "220000")       
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES" "1600000")
 
-require sis8300llrf, 3.6.0
+require sis8300llrf, 3.6.2
 ndsSetTraceLevel 5
 ndsCreateDevice "sis8300llrf", "$(LLRF_PORT)", "FILE=/dev/sis8300-$(LLRF_SLOT), NUM_PULSE_TYPES=$(LLRF_PULSETYPES)"
 
