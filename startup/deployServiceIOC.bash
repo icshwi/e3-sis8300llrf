@@ -4,12 +4,7 @@ if [ "$EUID" -ne 0 ] ; then
   exit
 fi
 
-if [ $# -eq 0 ] ; then
-  echo "usage: <e3 source directory>"
-  exit
-fi
-
-EPICS_SRC=$1
+EPICS_SRC=$(cd ../.. && pwd)
 hostName=$(hostname)
 echo "Preparing systemd service to run IOC on host $hostName"
 serviceName=/etc/systemd/system/ioc@llrf.service
@@ -22,12 +17,12 @@ systemctl enable ioc@llrf.service
 siteApp=/epics/base-3.15.5/require/3.0.4/siteApps/sis8300llrf
 mkdir -p $siteApp/log/procServ/
 mkdir -p $siteApp/run/procServ/
-cp $EPICS_SRC/e3-sis8300llrf/startup/llrf.cmd $siteApps/llrf.cmd
+cp $EPICS_SRC/e3-sis8300llrf/startup/llrf.cmd $siteApp/llrf.cmd
 
 echo "*Check - service created:"
 file $serviceName
 echo "*Check - service enabled:"
-wantsFile=${serviceName/ioc@llrf/multi-user.target.wants\\ioc@llrf}
-file $wantsFile
+wantsDir=${serviceName/ioc@llrf.service/multi-user.target.wants}
+ls $wantsDir | grep llrf
 echo "Check SiteApps directory for IOC configuration"
 tree $siteApp
