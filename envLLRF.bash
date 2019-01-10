@@ -3,7 +3,7 @@
 echo "*** Kernel Release ***"
 uname -a
 echo "*** UDev rules***"
-ls /etc/udev/rles.d/99-*
+ls /etc/udev/rules.d/99-*
 echo "*** Kernel Module Load Rules ***"
 ls /etc/modules-load.d/mrf.conf
 ls /etc/modules-load.d/sis8300drv.conf
@@ -15,6 +15,11 @@ ls /dev/sis8300-*
 ls /dev/uio*
 echo "*** OS Release***"
 cat /etc/centos-release
+echo "*** systemd configuration ***"
+echo " *service "
+file /etc/systemd/system/ioc@llrf.service
+echo " *service wants configuration "
+file /etc/systemd/system/multi-user.target.wants/ioc@llrf.service
 echo "*** Hardware Device ***"
 lspci -tv
 echo "*** EPICS Bases Available***"
