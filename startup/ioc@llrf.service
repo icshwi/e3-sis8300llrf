@@ -14,7 +14,7 @@ ExecStart=/usr/bin/procServ \
 		-f \
 		-L ${SITEAPP}/log/procServ/out-%i \
 		-i ^C^D \
-		-c ${SITEAPP}/run/procServ/%i \
+		-c ${SITEAPP}/run/procServ/ \
 		-n %i \
 		2000 \
 		/epics/base-3.15.5/require/3.0.4/bin/iocsh.bash \
