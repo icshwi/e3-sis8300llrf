@@ -7,18 +7,18 @@ Requires=multi-user.target
 [Service]
 User=root
 Type=simple
-Environment=SITEAPP=/epics/base-3.15.5/require/3.0.4/siteApps/sis8300llrf
+Environment=SITEAPP=/epics/iocs/sis8300llrf
 #run ProcServ
 WorkingDirectory=${SITEAPP}
 ExecStart=/usr/bin/procServ \
 		-f \
-		-L ${SITEAPP}/log/procServ/out-%i \
+		-L ${SITEAPP}/log-ioc-%i \
 		-i ^C^D \
-		-c ${SITEAPP}/run/procServ/ \
+		-c ${SITEAPP}/run/ \
 		-n %i \
 		2000 \
 		/epics/base-3.15.5/require/3.0.4/bin/iocsh.bash \
-		/epics/base-3.15.5/require/3.0.4/siteApps/sis8300llrf/llrf.cmd
+		${SITEAPP}/llrf.cmd
 
 [Install]
 WantedBy=multi-user.target

@@ -14,9 +14,9 @@ eval "sed 's/icslab-llrf/$hostName/' < $serviceNameGit" > $serviceName
 systemctl enable ioc@llrf.service
 
 #Prepare siteApp configuration for IOC instance specific configuration
-siteApp=/epics/base-3.15.5/require/3.0.4/siteApps/sis8300llrf
-mkdir -p $siteApp/log/procServ/
-mkdir -p $siteApp/run/procServ/
+siteApp=/epics/iocs/sis8300llrf
+mkdir -p $siteApp/log/
+mkdir -p $siteApp/run/
 cp $EPICS_SRC/e3-sis8300llrf/startup/llrf.cmd $siteApp/llrf.cmd
 
 echo "*Check - service created for $hostName:"
@@ -25,5 +25,5 @@ grep Host $serviceName
 echo "*Check - service enabled:"
 wantsDir=${serviceName/ioc@llrf.service/multi-user.target.wants}
 ls $wantsDir | grep llrf
-echo "Check SiteApps directory for IOC configuration"
+echo "Check IOC configuration"
 tree $siteApp
