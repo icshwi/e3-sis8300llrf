@@ -4,7 +4,14 @@ if [ "$EUID" -ne 0 ] ; then
   exit
 fi
 
-EPICS_SRC=$(cd ../.. && pwd)
+if [[ $# -gt 0 ]] ; then
+  EPICS_SRC=$1
+  echo "EPICS source directory specified as $EPICS_SRC"
+else
+  echo "Usage: deployServiceIOC.bash <e3 source directory>"
+  exit
+fi
+
 hostName=$(hostname)
 echo "Preparing systemd service to run IOC on host $hostName"
 serviceName=/etc/systemd/system/ioc@llrf.service
@@ -27,3 +34,6 @@ wantsDir=${serviceName/ioc@llrf.service/multi-user.target.wants}
 ls $wantsDir | grep llrf
 echo "Check IOC configuration"
 tree $siteApp
+
+echo "Reloading the systemd daemon configuration."
+systemctl daemon-reload
