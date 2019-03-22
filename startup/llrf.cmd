@@ -3,7 +3,7 @@
 #######################
 epicsEnvSet("LLRF_PREFIX"     "$(SIS8300LLRF_PREFIX=LLRF)" )
 epicsEnvSet("LLRF_SLOT"       "$(SIS8300LLRF_SLOT=5)"      )
-epicsEnvSet("LLRF_NOPULSETYPES" "$(SIS8300LLRF_NOPULSETYPES=4)")
+epicsEnvSet("LLRF_NOPULSETYPES" "$(SIS8300LLRF_NOPULSETYPES=1)")
 epicsEnvSet("LLRF_PULSETYPE" "$(SIS8300LLRF_PULSETYPE=0)")
 
 epicsEnvSet("LLRF_PORT",               "$(LLRF_PREFIX)")
