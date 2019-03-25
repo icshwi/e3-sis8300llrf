@@ -25,6 +25,8 @@ siteApp=/epics/iocs/sis8300llrf
 mkdir -p $siteApp/log/
 mkdir -p $siteApp/run/
 cp $EPICS_SRC/e3-sis8300llrf/startup/llrf.cmd $siteApp/llrf.cmd
+cp $EPICS_SRC/e3-sis8300llrf/startup/timing.cmd $siteApp/timing.cmd
+cp $EPICS_SRC/e3-sis8300llrf/startup/tr-sequencer.sh $siteApp/tr-sequencer.sh
 
 echo "*Check - service created for $hostName:"
 file $serviceName

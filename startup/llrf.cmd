@@ -26,3 +26,5 @@ dbLoadRecords("sis8300llrf-Setup.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_P
 dbLoadRecords("sis8300Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), REG_SCAN=2")
 dbLoadRecords("sis8300noAO.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), AI_NELM=$(AI_SMNM_MAX)")
 dbLoadRecords("sis8300llrf-Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), REG_SCAN=2")
+
+iocshLoad timing.cmd
