@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2018 - Present  European Spallation Source ERIC
+#  Copyright (c) 2018 - 2019  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -19,12 +19,13 @@
 #           Jeong Han Lee
 # email   : joaopaulomartins@esss.se
 #           jeonghan.lee@gmail.com
-# Date    : Thursday, September 13 21:49:53 CEST 2018
-# version : 0.0.1
+# Date    : Tuesday, April  2 16:55:14 CEST 2019
+# version : 0.0.2
 #
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+
 
 ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
@@ -51,7 +52,9 @@ sis8300llrfdrv_VERSION=$(SIS8300LLRFDRV_DEP_VERSION)
 endif
 
 
-EXCLUDE_ARCHS += linux-ppc64e6500 
+# print cc1plus: warning: unrecognized command line option ‘-Wno-format-truncation’ with lower gcc 7
+USR_CFLAGS   += -Wno-format-truncation
+USR_CPPFLAGS += -Wno-format-truncation
 
 
 
@@ -72,19 +75,23 @@ TEMPLATES += $(APPDB)/sis8300llrf-Register.db
 TEMPLATES += $(APPDB)/sis8300llrf-Setup.db
 ## SYSTEM LIBS 
 ##
-# USR_LIBS += boost_regex
-# USR_LIBS += readline
+
+
+ifeq ($(T_A),linux-ppc64e6500)
+USR_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/libxml2
+#USR_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/boost
+else ifeq ($(T_A),linux-corei7-poky)
+USR_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/libxml2
+#USR_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/boost
+else
 USR_INCLUDES += -I/usr/include/libxml2
+#USR_INCLUDES += -I/usr/include/boost
+endif
+
+#USR_LIBS += boost_regex
 USR_LIBS += xml2
 
 #
-
-## This RULE should be used in case of inflating DB files 
-## db rule is the default in RULES_DB, so add the empty one
-## Please look at e3-mrfioc2 for example.
-
-EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
-MSI = $(EPICS_BASE_HOST_BIN)/msi
 
 USR_DBFLAGS += -I . -I ..
 USR_DBFLAGS += -I $(EPICS_BASE)/db
