@@ -17,7 +17,7 @@ ExecStart=/usr/bin/procServ \
 		-c ${SITEAPP}/run/ \
 		-n %i \
 		2000 \
-		/epics/base-3.15.5/require/3.0.4/bin/iocsh.bash \
+		/epics/base-<epics_base>/require/<req_version>/bin/iocsh.bash \
 		${SITEAPP}/llrf.cmd
 
 [Install]

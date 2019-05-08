@@ -7,7 +7,8 @@ fi
 if [[ $# -gt 0 ]] ; then
   EPICS_SRC=$1
 else
-  echo "Usage: deployServiceIOC.bash <e3 source directory>"
+  echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version"
+  echo "sudo deployServiceIOC.sh $EPICS_SRC $EPICS_BASE $E3_REQUIRE_VERSION"
   exit
 fi
 
@@ -15,8 +16,16 @@ hostName=$(hostname)
 serviceName=/etc/systemd/system/ioc@llrf.service
 serviceNameGit=$EPICS_SRC/e3-sis8300llrf/startup/ioc@llrf.service
 #Prepare service and enable
-eval "sed 's/icslab-llrf/$hostName/' < $serviceNameGit" > $serviceName
+
+#Get EPICS base version and require version
+ver_base=$(echo $2 | cut -c13-18)
+
+eval "sed -e 's/icslab-llrf/$hostName/'\
+	-e 's/<epics_base>/$ver_base/'\
+	-e 's/<req_version>/$3/'\
+	< $serviceNameGit" > $serviceName
 systemctl enable ioc@llrf.service
+
 
 #Prepare siteApp configuration for IOC instance specific configuration
 siteApp=/epics/iocs/sis8300llrf
