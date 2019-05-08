@@ -1,8 +1,11 @@
+# Timing Configuration
+iocshLoad timing.iocsh
+
 #######################
 ### LLRF CONTROLLER ###
 #######################
 epicsEnvSet("LLRF_PREFIX"     "$(SIS8300LLRF_PREFIX=LLRF)" )
-epicsEnvSet("LLRF_SLOT"       "$(SIS8300LLRF_SLOT=5)"      )
+epicsEnvSet("LLRF_SLOT"       "$(SIS8300LLRF_SLOT=<slot>)"      )
 epicsEnvSet("LLRF_NOPULSETYPES" "$(SIS8300LLRF_NOPULSETYPES=1)")
 epicsEnvSet("LLRF_PULSETYPE" "$(SIS8300LLRF_PULSETYPE=0)")
 
@@ -27,4 +30,3 @@ dbLoadRecords("sis8300Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_POR
 dbLoadRecords("sis8300noAO.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), AI_NELM=$(AI_SMNM_MAX)")
 dbLoadRecords("sis8300llrf-Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), REG_SCAN=2")
 
-iocshLoad timing.cmd
