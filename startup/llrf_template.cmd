@@ -1,5 +1,5 @@
 # Timing Configuration
-iocshLoad timing.iocsh
+iocshLoad /epics/iocs/sis8300llrf/timing.iocsh
 
 #######################
 ### LLRF CONTROLLER ###

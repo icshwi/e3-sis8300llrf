@@ -4,11 +4,13 @@ if [ "$EUID" -ne 0 ] ; then
   exit
 fi
 
-if [[ $# -gt 0 ]] ; then
+if [[ $# -eq 3 ]] ; then
   EPICS_SRC=$1
+  EPICS_BASE=$2
+  E3_REQUIRE_VERSION=$3 
 else
   echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version"
-  echo "sudo deployServiceIOC.sh $EPICS_SRC $EPICS_BASE $E3_REQUIRE_VERSION"
+  echo "e.g. sudo sh deployServiceIOC.sh $EPICS_SRC $EPICS_BASE $E3_REQUIRE_VERSION"
   exit
 fi
 
@@ -17,12 +19,13 @@ serviceName=/etc/systemd/system/ioc@llrf.service
 serviceNameGit=$EPICS_SRC/e3-sis8300llrf/startup/ioc@llrf.service
 #Prepare service and enable
 
-#Get EPICS base version and require version
-ver_base=$(echo $2 | cut -c13-18)
+#Insert EPICS base version and require version into service unit ioc@llrf
 
+#Escape the forward slash characters in EPICS_BASE path
+EPICS_BASE=${EPICS_BASE//\//\\\/}
 eval "sed -e 's/icslab-llrf/$hostName/'\
-	-e 's/<epics_base>/$ver_base/'\
-	-e 's/<req_version>/$3/'\
+	-e 's/<epics_base>/$EPICS_BASE/'\
+	-e 's/<req_version>/$E3_REQUIRE_VERSION/'\
 	< $serviceNameGit" > $serviceName
 systemctl enable ioc@llrf.service
 
