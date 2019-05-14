@@ -13,9 +13,9 @@ epicsEnvSet("LLRF_PORT",               "$(LLRF_PREFIX)")
 epicsEnvSet("SP_SMNM_MAX"              "0x1000")
 epicsEnvSet("FF_SMNM_MAX"              "0x10000")
 epicsEnvSet("PIERR_SMNM_MAX"           "0x10000")
-epicsEnvSet("AI_SMNM_MAX"              "0x60000")       
+epicsEnvSet("AI_SMNM_MAX"              "0x200000")       
 epicsEnvSet("AI_SMNM_DEFOPT"           "220000")       
-epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES" "1600000")
+epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES" "8388624")
 
 require sis8300llrf, 3.6.7
 ndsSetTraceLevel 4
