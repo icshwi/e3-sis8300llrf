@@ -17,7 +17,7 @@ epicsEnvSet("AI_SMNM_MAX"              "0x200000")
 epicsEnvSet("AI_SMNM_DEFOPT"           "220000")       
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES" "8388624")
 
-require sis8300llrf, 3.9.1
+require sis8300llrf, 3.9.2
 ndsSetTraceLevel 4
 ndsCreateDevice "sis8300llrf", "$(LLRF_PORT)", "FILE=/dev/sis8300-$(LLRF_SLOT), NUM_PULSE_TYPES=$(LLRF_NOPULSETYPES)"
 
@@ -30,3 +30,11 @@ dbLoadRecords("sis8300Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_POR
 dbLoadRecords("sis8300noAO.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), AI_NELM=$(AI_SMNM_MAX)")
 dbLoadRecords("sis8300llrf-Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), REG_SCAN=2")
 
+
+epicsThreadSleep(1)
+# Configure the RTM for LLRF
+afterInit("dbpf $(LLRF_PREFIX):RTM 2 > /dev/null")
+epicsThreadSleep(1)
+
+# Configure vector modulator output, write 0x12 to 0x60600000
+afterInit("dbpf $(LLRF_PREFIX):REG-SET-0x12  1616904192 > /dev/null")
