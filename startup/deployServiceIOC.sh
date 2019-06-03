@@ -7,7 +7,7 @@ fi
 if [[ $# -gt 0 ]] ; then
   EPICS_SRC=$1
 else
-  echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version"
+  echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version>"
   echo "sudo deployServiceIOC.sh $EPICS_SRC $EPICS_BASE $E3_REQUIRE_VERSION"
   exit
 fi
