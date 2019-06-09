@@ -1,3 +1,9 @@
+if [ $# -lt 2 ] ; then                              
+    echo "usage: sh test1.sh <system> <SIS8300 slot>"
+    echo "e.g. sh test1.sh LLRF-LION 6"                  
+    exit                                            
+fi                                                  
+
 llrf_prefix=$1
 echo '*** State Machine'
 
