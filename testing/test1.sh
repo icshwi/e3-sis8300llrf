@@ -1,4 +1,4 @@
-llrf_prefix=LLRF-$1
+llrf_prefix=$1
 echo '*** State Machine'
 
 state='ON'
