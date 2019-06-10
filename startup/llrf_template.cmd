@@ -38,3 +38,6 @@ epicsThreadSleep(1)
 
 # Configure vector modulator output, write 0x12 to 0x60600000
 afterInit("dbpf $(LLRF_PREFIX):REG-SET-0x12  1616904192 > /dev/null")
+
+# Save REQMOD PVs
+afterInit("dbgrep REQMOD* > '/epics/iocs/sis8300llrf/REQMODs.list'")
