@@ -96,3 +96,10 @@ caput $llrf_prefix:AI8-ATT $attVal > /dev/null
 result="$(sis8300drv_reg /dev/sis8300-$2 0xF84)"
 result=$(($result & 0x000000FF))
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+
+echo '*** Test Pulse'
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x20
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x40
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x80
+result="$(caget -t $llrf_prefix:PULSEDONECNT)"
+[ "$result" = "1" ] && echo "Pass" || echo "***FAIL!!!***"
