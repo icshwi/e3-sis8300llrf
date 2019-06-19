@@ -19,6 +19,19 @@ done
 llrf_prefix=$1
 echo '*** State Machine'
 
+state='RESETTING'
+msg='RESET'
+echo "Go to $state"
+caput -S $llrf_prefix:MSGS $msg > /dev/null
+result="$(caget -t $llrf_prefix)"
+[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+
+state='INIT'
+echo "Go to $state"
+caput -S $llrf_prefix:MSGS $state > /dev/null
+result="$(caget -t $llrf_prefix)"
+[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+
 state='ON'
 echo "Go to $state"
 caput -S $llrf_prefix:MSGS $state > /dev/null
@@ -38,11 +51,6 @@ caput -S $llrf_prefix:MSGS $state > /dev/null
 result="$(caget -t $llrf_prefix)"
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
-state='ON'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $state > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
 echo 'Enable VM'
 state=0x700
