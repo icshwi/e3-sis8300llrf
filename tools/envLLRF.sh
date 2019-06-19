@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [ $# -ne 1 ]; then
-    echo 'usage: listDeps.sh <$EPICS_SRC>'
+    echo 'usage: envLLRF.sh <$EPICS_SRC>'
     exit 1
 fi
 
