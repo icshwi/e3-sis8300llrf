@@ -1,4 +1,22 @@
-llrf_prefix=LLRF-$1
+if [ $# -lt 2 ] ; then                              
+    echo "usage: sh test1.sh <system> <SIS8300 slot>"
+    echo "e.g. sh test1.sh LLRF-LION 6"                  
+    exit                                            
+fi          
+
+# Print module versions
+echo "*** Module versions"
+pv_mods=`cat /epics/iocs/sis8300llrf/REQMODs.list | grep MODULES`
+pv_vers=`cat /epics/iocs/sis8300llrf/REQMODs.list | grep VERSIONS`
+n=`caget -t $pv_mods | cut -d ' ' -f 1`
+for (( i=2; i <= $n+1; i++ ))
+do
+    mod=`caget -t $pv_mods | cut -d ' ' -f $i`
+    ver=`caget -t $pv_vers | cut -d ' ' -f $i`
+    echo $mod - $ver
+done
+
+llrf_prefix=$1
 echo '*** State Machine'
 
 state='ON'
