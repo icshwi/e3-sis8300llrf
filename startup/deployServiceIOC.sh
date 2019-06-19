@@ -7,7 +7,7 @@ fi
 if [[ $# -gt 0 ]] ; then
   EPICS_SRC=$1
 else
-  echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version>"
+  echo "Usage: sudo deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version> <LLRF_IOC_NAME>"
   echo "sudo deployServiceIOC.sh $EPICS_SRC $EPICS_BASE $E3_REQUIRE_VERSION"
   exit
 fi
@@ -19,11 +19,11 @@ serviceNameGit=$EPICS_SRC/e3-sis8300llrf/startup/ioc@llrf.service
 
 #Get EPICS base version and require version
 ver_base=$(echo $2 | cut -c13-18)
-
 eval "sed -e 's/icslab-llrf/$hostName/'\
 	-e 's/<epics_base>/$ver_base/'\
 	-e 's/<req_version>/$3/'\
 	< $serviceNameGit" > $serviceName
+
 systemctl enable ioc@llrf.service
 
 
@@ -38,8 +38,10 @@ if [ ${#slot_fpga} -lt 1 ] ; then
   echo "Board slot must be manually configured in $siteApp/llrf.cmd"
   cp $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd $siteApp/llrf.cmd
 else
-
-  eval "sed 's/<slot>/$slot_fpga/' < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd"
+  #Populate digitiser slot and IOC Name in startup script.
+  eval "sed -e 's/<slot>/$slot_fpga/'\
+    -e 's/<LLRF_IOC_NAME>/$4/'\
+    < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd"
 fi
 
 #Timing configuration

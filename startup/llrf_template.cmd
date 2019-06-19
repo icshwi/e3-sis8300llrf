@@ -4,7 +4,7 @@ iocshLoad timing.iocsh
 #######################
 ### LLRF CONTROLLER ###
 #######################
-epicsEnvSet("LLRF_PREFIX"     "$(SIS8300LLRF_PREFIX=LLRF)" )
+epicsEnvSet("LLRF_PREFIX"     "$(SIS8300LLRF_PREFIX=<LLRF_IOC_NAME>)" )
 epicsEnvSet("LLRF_SLOT"       "$(SIS8300LLRF_SLOT=<slot>)"      )
 epicsEnvSet("LLRF_NOPULSETYPES" "$(SIS8300LLRF_NOPULSETYPES=1)")
 epicsEnvSet("LLRF_PULSETYPE" "$(SIS8300LLRF_PULSETYPE=0)")
