@@ -21,25 +21,26 @@ echo '*** State Machine'
 
 state='ON'
 echo "Go to $state"
-caput $llrf_prefix $state > /dev/null
+caput -S $llrf_prefix:MSGS $state > /dev/null
 result="$(caget -t $llrf_prefix)"
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
 state='RESETTING'
+msg='RESET'
 echo "Go to $state"
-caput $llrf_prefix $state > /dev/null
+caput -S $llrf_prefix:MSGS $msg > /dev/null
 result="$(caget -t $llrf_prefix)"
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
 state='INIT'
 echo "Go to $state"
-caput $llrf_prefix $state > /dev/null
+caput -S $llrf_prefix:MSGS $state > /dev/null
 result="$(caget -t $llrf_prefix)"
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
 state='ON'
 echo "Go to $state"
-caput $llrf_prefix $state > /dev/null
+caput -S $llrf_prefix:MSGS $state > /dev/null
 result="$(caget -t $llrf_prefix)"
 [ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
