@@ -17,109 +17,83 @@ do
 done
 
 llrf_prefix=$1
+
+test() {
+	[ "$1" = "$2" ] && echo "Pass" || echo "***Fail: result = $2***"
+}
+
+state_change() {
+	echo "Go to state $1"
+	eval "caput -S $llrf_prefix:MSGS $1 >/dev/null"
+	usleep 500000
+	if [ $# -eq 2 ]; then 
+		test $2 "$(caget -t $llrf_prefix)"
+	else
+		test $1 "$(caget -t $llrf_prefix)"
+	fi
+}
+
+set_att() {
+	attVal=$(( 1 + (RANDOM % 30  / (1 + $1 / 8)) ))
+	state=$(( $attVal * 2 * (1 + $1 / 8) ))
+	echo "Ch $1 - setting attenuation to $attVal"
+	caput $llrf_prefix:AI$1-ATT $attVal > /dev/null
+	# 4-byte registers 0xF82, 0xF83 and 0xF84 hold the values with one byte offsets between values
+	reg="0xF8$(( 2 + $i / 4 ))"
+	result="$(sis8300drv_reg /dev/sis8300-$2 $reg)"
+	rshift=$(( $1 % 4 * 8))
+	result=$(( ($result >> $rshift) & 0x000000FF))
+	usleep 500000
+	test $state $result
+}
+
 echo '*** State Machine'
 
-state='RESETTING'
-msg='RESET'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $msg > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+state_change RESET RESETTING
+state_change OFF
+state_change INIT
+state_change ON
+state_change RESET RESETTING
+state_change INIT
 
-state='INIT'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $state > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
-
-state='ON'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $state > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
-
-state='RESETTING'
-msg='RESET'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $msg > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
-
-state='INIT'
-echo "Go to $state"
-caput -S $llrf_prefix:MSGS $state > /dev/null
-result="$(caget -t $llrf_prefix)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
-
-
+echo "*** VM Output ***"
 echo 'Enable VM'
-state=0x700
 caput $llrf_prefix:VMENBL 1 > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0x12F)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+test 0x700 "$(sis8300drv_reg /dev/sis8300-$2 0x12F)"
 
 echo 'Disable VM'
-state=0x600
 caput $llrf_prefix:VMENBL 0 > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0x12F)"
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+test 0x600 "$(sis8300drv_reg /dev/sis8300-$2 0x12F)"
 
-echo 'Test attenuator values'
-attVal=$(( $RANDOM % 31 ))
-state=$(( $attVal * 2 ))
+echo '*** Attenuation Parameters'
+echo 'Test in INIT state'
 
-echo "AI0 attenuator set to $attVal"
-caput $llrf_prefix:AI0-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF82)"
-result=$(($result & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+state_change 'RESET' 'RESETTING'
+state_change 'INIT'
 
-echo "AI1 attenuator set to $attVal"
-caput $llrf_prefix:AI1-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF82)"
-result=$(($result >> 8 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+# Use only integers for testing of attenuation range 1-31
+# Note this excludes fractional attenuation values in the testing but for now the simplicity with worth the limited functionality testing.
 
-echo "AI2 attenuator set to $attVal"
-caput $llrf_prefix:AI2-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF82)"
-result=$(($result >> 16 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+attVal=$(( $RANDOM % 30 + 1 ))
+for i in `seq 0 8`
+do 
+	set_att $i $2
+done
 
-echo "AI3 attenuator set to $attVal"
-caput $llrf_prefix:AI3-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF82)"
-result=$(($result >> 24 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+echo 'Test attenuation setting in ON state'
 
-echo "AI4 attenuator set to $attVal"
-caput $llrf_prefix:AI4-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF83)"
-result=$(($result & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+state_change 'RESET' 'RESETTING'
+state_change 'INIT'
+state_change 'ON'
 
-echo "AI5 attenuator set to $attVal"
-caput $llrf_prefix:AI5-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF83)"
-result=$(($result >> 8 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+attVal=$(( $RANDOM % 30 + 1 ))
+for i in `seq 0 8`;
+do
+	set_att $i $2
+done
 
-echo "AI6 attenuator set to $attVal"
-caput $llrf_prefix:AI6-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF83)"
-result=$(($result >> 16 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
+echo 'Revert to INIT state'
+state_change 'RESET' 'RESETTING'
+state_change 'INIT'
 
-echo "AI7 attenuator set to $attVal"
-caput $llrf_prefix:AI7-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF83)"
-result=$(($result >> 24 & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
 
-attVal=$(( RANDOM % 15 ))
-state=$(( attVal * 4 ))
-echo "AI8 attenuator set to $attVal"
-caput $llrf_prefix:AI8-ATT $attVal > /dev/null
-result="$(sis8300drv_reg /dev/sis8300-$2 0xF84)"
-result=$(($result & 0x000000FF))
-[ "$result" = "$state" ] && echo "Pass" || echo "***FAIL!!!***"
