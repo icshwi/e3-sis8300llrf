@@ -56,7 +56,7 @@ state_change ON
 state_change RESET RESETTING
 state_change INIT
 
-echo "*** VM Output ***"
+echo "*** VM Output"
 echo 'Enable VM'
 caput $llrf_prefix:VMENBL 1 > /dev/null
 test 0x700 "$(sis8300drv_reg /dev/sis8300-$2 0x12F)"
@@ -96,4 +96,15 @@ echo 'Revert to INIT state'
 state_change 'RESET' 'RESETTING'
 state_change 'INIT'
 
+echo '*** Pulse'
 
+state_change 'RESET' 'RESETTING'
+state_change 'INIT'
+state_change 'ON'
+
+
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x20
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x40
+sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x80
+result="$(caget -t $llrf_prefix:PULSEDONECNT)"
+test $result 1
