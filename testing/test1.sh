@@ -108,3 +108,7 @@ sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x40
 sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x80
 result="$(caget -t $llrf_prefix:PULSEDONECNT)"
 test $result 1
+
+echo 'Revert to INIT state'
+state_change 'RESET' 'RESETTING'
+state_change 'INIT'
