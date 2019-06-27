@@ -102,7 +102,7 @@ state_change 'RESET' 'RESETTING'
 state_change 'INIT'
 state_change 'ON'
 
-
+echo 'Simulating backplane triggers to FPGA for pulse_coming, pulse_start and pulse_end.'
 sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x20
 sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x40
 sis8300drv_reg /dev/sis8300-$2 0x404 -w 0x80
