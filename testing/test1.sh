@@ -91,5 +91,5 @@ result="$(caget -t $LLRF_IOC_NAME:PULSEDONECNT)"
 run "check $result 50"
 
 echo 'Revert to INIT state'
-run "state_change 'RESET' 'RESETTING'
+run "state_change 'RESET' 'RESETTING'"
 run "state_change 'INIT'"
