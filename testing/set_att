@@ -1,0 +1,34 @@
+if [ $1 = "-h" ] || [ $# -lt 1 ]; then
+    echo "Writes an attenuation value to register for channels 0-8."
+    echo "Value parameter is optional and a random value in the valid range"
+    echo "is generated."
+    echo "usage: sh set_att <sis8300 slot> <channel> (value)"
+    echo "e.g. sh set-att 0 15" 
+    exit
+fi
+
+slot=$1
+channel=$2
+
+if [ $# -ge 3 ]; then
+    attVal = $3
+else
+    attVal=$(( 1 + (RANDOM % 30  / (1 + $channel / 8)) ))
+fi
+
+run() {
+    eval "$(dirname $0)/$1"
+}
+
+
+
+state=$(( $attVal * 2 * (1 + $channel / 8) ))
+echo "Ch $channel - setting attenuation to $attVal"
+caput $LLRF_IOC_NAME:AI$1-ATT $attVal > /dev/null
+# 4-byte registers 0xF82, 0xF83 and 0xF84 hold the values with one byte offsets between values
+reg="0xF8$(( 2 + $channel / 4 ))"
+result="$(sis8300drv_reg /dev/sis8300-$slot $reg)"
+rshift=$(( $channel % 4 * 8))
+result=$(( ($result >> $rshift) & 0x000000FF))
+usleep 500000
+run "check $state $result"

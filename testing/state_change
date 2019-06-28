@@ -1,0 +1,19 @@
+if [ $# -lt 1 ] ; then                              
+    echo "usage: sh state_change.sh <required state> (state result)"
+    echo "e.g. sh state_change.sh RESET RESETTING"                  
+    exit                                            
+fi         
+
+run() {
+    eval "$(dirname $0)/$1"
+}
+
+echo "Go to state $1"
+eval "caput -S $LLRF_IOC_NAME:MSGS $1 >/dev/null"
+usleep 500000
+result=$(caget -t $LLRF_IOC_NAME)
+if [ $# -eq 1 ]; then 
+    run "check $1 $result"
+else
+    run "check $2 $result"
+fi
