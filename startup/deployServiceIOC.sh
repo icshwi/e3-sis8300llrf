@@ -28,21 +28,38 @@ systemctl enable ioc@llrf.service
 
 
 #Prepare siteApp configuration for IOC instance specific configuration
-siteApp=/epics/iocs/sis8300llrf
+siteApp=/iocs/sis8300llrf
 mkdir -p $siteApp/log/
 mkdir -p $siteApp/run/
 
-slot_fpga=$(ls /dev | grep sis8300 | cut -c9-10)
-if [ ${#slot_fpga} -lt 1 ] ; then 
+cp $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.iocsh $siteApp/llrf.iocsh
+
+slots_fpga=$(ls /dev/sis8300-* | cut -f2 -d "-")
+if [ ${#slots_fpga} -lt 1 ] ; then 
   echo "Could not find SIS8300 digitiser board."
   echo "Board slot must be manually configured in $siteApp/llrf.cmd"
   cp $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd $siteApp/llrf.cmd
 else
-  #Populate digitiser slot and IOC Name in startup script.
-  eval "sed -e 's/<slot>/$slot_fpga/'\
-    -e 's/<LLRF_IOC_NAME>/$4/'\
-    < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd"
+  if [ ${#slots_fpga} -eq 1 ]; then
+     i='' # just one board, use original IOC name
+  else
+     i=1 # more than 1 board, enumerate IOC name
+  fi
+
+  snippet=""
+  for slot_fpga in $(ls /dev/sis8300-* | cut -f2 -d "-" | sort -n)
+  do
+    snippet="$snippet \\\n\
+epicsEnvSet(\"LLRF_PREFIX\"     \"$4$i\" ) \\\n \
+epicsEnvSet(\"LLRF_SLOT\"       \"$slot_fpga\"    ) \\\n \
+iocshLoad $\(E3_CMD_TOP\)\/llrf.iocsh \\\n "
+    i=$(($i+1))
+  done
+    #Populate digitiser slot and IOC Name in startup script.
+    eval "sed -e $'s/<snippet>/$snippet/g' < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd" 
+
 fi
+
 
 #Timing configuration
 # We check the EVR is available on PCIe to use in timing.iocsh snippet used to configure the EVR.
@@ -52,7 +69,7 @@ if [ ${#pcie_enumeration} != 7 ] ; then
   echo "Therefore no timing configuration created."
   echo "# no timing configuration as no EVR detected on PCIe bus." > $siteApp/timing.iocsh 
 else
-  eval "sed 's/<B:D.F>/$pcie_enumeration/' < $EPICS_SRC/e3-sis8300llrf/startup/timing_template.iocsh" > "/epics/iocs/sis8300llrf/timing.iocsh"
+  eval "sed 's/<B:D.F>/$pcie_enumeration/' < $EPICS_SRC/e3-sis8300llrf/startup/timing_template.iocsh" > "/iocs/sis8300llrf/timing.iocsh"
   cp $EPICS_SRC/e3-sis8300llrf/startup/tr-sequencer.sh $siteApp/tr-sequencer.sh
 fi
 
