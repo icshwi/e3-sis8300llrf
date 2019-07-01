@@ -24,7 +24,7 @@ run() {
 
 state=$(( $attVal * 2 * (1 + $channel / 8) ))
 echo "Ch $channel - setting attenuation to $attVal"
-caput $LLRF_IOC_NAME:AI$1-ATT $attVal > /dev/null
+caput $LLRF_IOC_NAME:AI$channel-ATT $attVal > /dev/null
 # 4-byte registers 0xF82, 0xF83 and 0xF84 hold the values with one byte offsets between values
 reg="0xF8$(( 2 + $channel / 4 ))"
 result="$(sis8300drv_reg /dev/sis8300-$slot $reg)"
