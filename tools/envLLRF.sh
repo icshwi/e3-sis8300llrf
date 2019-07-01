@@ -31,11 +31,11 @@ lspci -v | grep Juelich
 echo "*** EPICS Bases Available***"
 ls /epics/ | grep base
 echo "*** EPICS Modules Installed ***"
-make -C $EPICS_SRC/e3-asyn existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-loki existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-nds existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-sis8300drv existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-sis8300 existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-sis8300llrfdrv existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-sis8300llrf existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+"
-make -C $EPICS_SRC/e3-mrfioc2 existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" 
+make -C $EPICS_SRC/e3-asyn existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-loki existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-nds existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-sis8300drv existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-sis8300 existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-sis8300llrfdrv existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-sis8300llrf existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
+make -C $EPICS_SRC/e3-mrfioc2 existent | grep "[0-9]\+\.[0-9]\+\.[0-9]\+" | grep -v make:
