@@ -31,4 +31,4 @@ result="$(sis8300drv_reg /dev/sis8300-$slot $reg)"
 rshift=$(( $channel % 4 * 8))
 result=$(( ($result >> $rshift) & 0x000000FF))
 usleep 500000
-run "check $state $result"
+run "check $state $result 'Test attenuator on channel $channel'"

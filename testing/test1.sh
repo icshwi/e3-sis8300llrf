@@ -34,11 +34,11 @@ run "state_change INIT"
 echo "*** VM Output"
 echo 'Enable VM'
 caput $LLRF_IOC_NAME:VMENBL 1 > /dev/null
-run "check 0x700 $(sis8300drv_reg /dev/sis8300-$slot 0x12F)"
+run "check 0x700 $(sis8300drv_reg /dev/sis8300-$slot 0x12F) 'Test on Enable VM'"
 
 echo 'Disable VM'
 caput $LLRF_IOC_NAME:VMENBL 0 > /dev/null
-run "check 0x600 $(sis8300drv_reg /dev/sis8300-$slot 0x12F)"
+run "check 0x600 $(sis8300drv_reg /dev/sis8300-$slot 0x12F) 'Test on Disable VM'"
 
 echo '*** Attenuation Parameters'
 echo 'Test in INIT state'
@@ -88,7 +88,7 @@ do
 done
 
 result="$(caget -t $LLRF_IOC_NAME:PULSEDONECNT)"
-run "check $result 50"
+run "check $result 50 'Test simulating backplane triggers'"
 
 echo 'Revert to INIT state'
 run "state_change 'RESET' 'RESETTING'"

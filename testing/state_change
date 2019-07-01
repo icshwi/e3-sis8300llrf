@@ -13,7 +13,7 @@ eval "caput -S $LLRF_IOC_NAME:MSGS $1 >/dev/null"
 usleep 500000
 result=$(caget -t $LLRF_IOC_NAME)
 if [ $# -eq 1 ]; then 
-    run "check $1 $result"
+    run "check $1 $result 'Test state change to $1'"
 else
-    run "check $2 $result"
+    run "check $2 $result 'Test state change to $1'"
 fi
