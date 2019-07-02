@@ -6,7 +6,9 @@ ESS Site-specific EPICS module : sis8300llrf
 ## Startup scripts
 
 * To deploy this IOC as service use the script startup/deployServiceIOC.sh :
-`sudo ./deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version> `
+`sudo ./deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version> <IOC name>`
+
+This deploy script will correctly if boards are already connected and recognized by the OS
 
 The IOC will then run on boot of the system. Alternatively for manual initiation the startup script for the system can be found at /epics/iocs/sis8300llrf/llrf.cmd
 
