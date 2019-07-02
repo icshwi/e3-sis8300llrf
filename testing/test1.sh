@@ -9,8 +9,8 @@ slot=$1
 path=$(pwd)/$(dirname $0)
 # Print module versions
 echo "*** Module versions"
-pv_mods=`cat /epics/iocs/sis8300llrf/REQMODs.list | grep MODULES`
-pv_vers=`cat /epics/iocs/sis8300llrf/REQMODs.list | grep VERSIONS`
+pv_mods=`cat /iocs/sis8300llrf/REQMODs.list | grep MODULES`
+pv_vers=`cat /iocs/sis8300llrf/REQMODs.list | grep VERSIONS`
 n=`caget -t $pv_mods | cut -d ' ' -f 1`
 for (( i=2; i<= $n+1; i++ ))
 do
