@@ -38,7 +38,7 @@ slots_fpga=$(ls /dev/sis8300-* | cut -f2 -d "-")
 if [ ${#slots_fpga} -lt 1 ] ; then 
   echo "Could not find SIS8300 digitiser board."
   echo "Board slot must be manually configured in $siteApp/llrf.cmd"
-  snippet="epicsEnvSet(\"LLRF_PREFIX\"     \"<IOC_NAME>\" ) \\\n \
+  snippet="epicsEnvSet(\"LLRF_PREFIX\"     \"$4\" ) \\\n \
 epicsEnvSet(\"LLRF_SLOT\"       \"<slot>\"    ) \\\n \
 iocshLoad $\(E3_CMD_TOP\)\/llrf.iocsh \\\n "
   eval "sed -e $'s/<snippet>/$snippet/g' < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd" 
