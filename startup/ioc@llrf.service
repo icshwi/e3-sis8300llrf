@@ -7,7 +7,7 @@ Requires=multi-user.target
 [Service]
 User=root
 Type=simple
-Environment=SITEAPP=/epics/iocs/sis8300llrf
+Environment=SITEAPP=/iocs/sis8300llrf
 #run ProcServ
 WorkingDirectory=${SITEAPP}
 ExecStart=/usr/bin/procServ \
