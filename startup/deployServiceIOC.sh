@@ -72,7 +72,7 @@ if [ ${#pcie_enumeration} != 7 ] ; then
   echo "Therefore no timing configuration created."
   echo "# no timing configuration as no EVR detected on PCIe bus." > $siteApp/timing.iocsh 
 else
-  eval "sed 's/<B:D.F>/$pcie_enumeration/' < $EPICS_SRC/e3-sis8300llrf/startup/timing_template.iocsh" > "/iocs/sis8300llrf/timing.iocsh"
+  eval "sed -e 's/<B:D.F>/$pcie_enumeration/' -e 's/<LLRF_IOC_NAME>/$4/' < $EPICS_SRC/e3-sis8300llrf/startup/timing_template.iocsh" > "/iocs/sis8300llrf/timing.iocsh"
   cp $EPICS_SRC/e3-sis8300llrf/startup/tr-sequencer.sh $siteApp/tr-sequencer.sh
 fi
 

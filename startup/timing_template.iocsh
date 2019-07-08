@@ -1,7 +1,7 @@
 require mrfioc2,2.2.0-rc5
 
 epicsEnvSet("IOC" "TR")
-epicsEnvSet("DEV1" "LLRF")
+epicsEnvSet("DEV1" "<LLRF_IOC_NAME>")
 
 epicsEnvSet("MainEvtCODE"	"14")
 epicsEnvSet("HeartbeatEvtCODE"	"122")
