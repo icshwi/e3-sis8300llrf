@@ -92,6 +92,22 @@ done
 result="$(caget -t $LLRF_INSTANCE:PULSEDONECNT)"
 run "check $result 50 'Test simulating backplane triggers'"
 
+run "state_change $LLRF_INSTANCE RESET"
+run "state_change $LLRF_INSTANCE INIT"
+run "state_change $LLRF_INSTANCE ON"
+
+for i in `seq 1 49`
+do
+    echo "Beam Pulse $i"
+    sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x20
+    sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x40
+    sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x80
+    usleep 100000
+done
+
+result="$(caget -t $LLRF_INSTANCE:PULSEDONECNT)"
+run "check $result 49 'Test simulating backplane triggers'"
+
 echo 'Revert to INIT state'
 run "state_change $LLRF_INSTANCE RESET"
 run "state_change $LLRF_INSTANCE INIT"
