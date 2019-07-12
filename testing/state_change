@@ -1,6 +1,6 @@
-if [ $# -ne 1 ] ; then                              
-    echo "usage: sh state_change.sh <required state>"
-    echo "e.g. sh state_change.sh RESET"
+if [ $# -ne 2 ] ; then                              
+    echo "usage: sh state_change.sh <LLRF_INSTANCE> <required state>"
+    echo "e.g. sh state_change.sh LLRF-TS2-1-1 RESET"
     exit                                            
 fi         
 
@@ -8,14 +8,17 @@ run() {
     eval "$(dirname $0)/$1"
 }
 
-echo "Go to state $1"
-eval "caput -S $LLRF_IOC_NAME:MSGS $1 >/dev/null"
+LLRF_INSTANCE=$1
+req_state=$2
+
+echo "Go to state $req_state"
+eval "caput -S $LLRF_INSTANCE:MSGS $req_state >/dev/null"
 usleep 500000
-result=$(caget -t $LLRF_IOC_NAME)
-if [ $1 == 'RESET' ]; then 
+result=$(caget -t $LLRF_INSTANCE)
+if [ $req_state == 'RESET' ]; then 
 	# Special case when state request is 'RESET' as the expected new state is 'RESETTING', allow for this case.
-    run "check RESETTING $result Test state change to $1"
+    run "check RESETTING $result Test state change to $req_state"
 else
 	# The norman user case it that the state request matches the expected new state
-    run "check $1 $result Test state change to $1"
+    run "check $req_state $result Test state change to $req_state"
 fi
