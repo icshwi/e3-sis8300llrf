@@ -1,4 +1,4 @@
-if [ $# -lt 1 ] ; then                              
+if [ $# -lt 2 ] ; then                              
     echo "usage: sh test1.sh <LLRF INSTANCE> <SIS8300 slot>"
     echo "e.g. sh test1.sh LLRF1 6"                  
     exit                                            
@@ -52,7 +52,7 @@ run "state_change $LLRF_INSTANCE INIT"
 
 for i in `seq 0 8`
 do 
-    attVal=$(( 1 + $RANDOM % 30 / (1 + $i / 8) ))
+    attVal=$(( 1 + $RANDOM % 31 / (1 + $i / 8) ))
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
@@ -64,7 +64,7 @@ run "state_change $LLRF_INSTANCE ON"
 
 for i in `seq 0 8`;
 do
-    attVal=$(( 1 + $RANDOM % 30 / (1 + $i / 8) ))
+    attVal=$(( 1 + $RANDOM % 31 / (1 + $i / 8) ))
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
