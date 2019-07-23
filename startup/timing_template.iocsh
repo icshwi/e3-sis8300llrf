@@ -35,7 +35,7 @@ afterInit("dbpf $(IOC)-$(DEV1):DlyGen0-Width-SP 1000") # time in micro-seconds
 afterInit("dbpf $(IOC)-$(DEV1):OutBack0-Src-SP 0") # trigger from delay generator 0 to RX17
 afterInit("dbpf $(IOC)-$(DEV1):OutFP0-Src-SP 0")
 
-afterInit("dbpf $(IOC)-$(DEV1):DlyGen1-Evt-Trig0-SP $(Pulse_coming_event)")
+afterInit("dbpf $(IOC)-$(DEV1):DlyGen1-Evt-Trig0-SP $(Pulse_start_event)")
 afterInit("dbpf $(IOC)-$(DEV1):DlyGen1-Width-SP 1000") # time in micro-seconds
 afterInit("dbpf $(IOC)-$(DEV1):OutBack1-Src-SP 1") # trigger from delay generator 0 to TX17
 afterInit("dbpf $(IOC)-$(DEV1):OutFP1-Src-SP 1")
