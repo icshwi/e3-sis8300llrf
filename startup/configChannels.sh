@@ -2,19 +2,17 @@ function usage() {
     echo "usage: configChannels.sh"
     echo "-a    channel number - amplifier power"
     echo "-c    channel number - cavity power"
-    echo "-l    LLRF_IOC_NAME (for PV prefix)"
     echo "-n    digitiser instance"
     echo "-p    channel number - preamplifier power"
     echo "-h    help"
 }
 
-options=":a:c:l:n:p:h"
+options=":a:c:n:p:h"
 while getopts "${options}" opts; do
     case "${opts}" in
         h) usage                    ;;
         a) chAmp=${OPTARG}          ;;
         c) chCav=${OPTARG}          ;;
-        l) LLRF_IOC_NAME=${OPTARG}  ;;
         n) iNum=${OPTARG}           ;; 
         p) chPreAmp=${OPTARG}       ;;
     esac
@@ -29,8 +27,8 @@ fi
 
 # Populate iocsh snippet containing alias definitions.
 echo "# Alias definitions for digitiser card number $iNum" > $fPath
-[ ${#chAmp} -gt 0 ] && echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chAmp, N=$LLRF_IOC_NAME:AmpPow\")" >> $fPath
-[ ${#chCav} -gt 0 ] && echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chCav, N=$LLRF_IOC_NAME:CavPow\")" >> $fPath
-[ ${#chPreAmp} -gt 0 ] && echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chPreAmp, N=$LLRF_IOC_NAME:PreAmpPow\")" >> $fPath
-
-
+if [ ${#chAmp} -gt 0 ]; then
+    echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chAmp, A=$LLRF_IOC_NAME:AmpPow\")" >> $fPath
+    echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chAmp-ATT, A=$LLRF_IOC_NAME:AmpPow-ATT\")" >> $fPath
+    echo "dbLoadRecords(\$(E3_CMD_TOP)/alias.template, \"O=$LLRF_IOC_NAME$iNum:AI$chAmp-ATT-RBV, A=$LLRF_IOC_NAME:AmpPow-ATT-RBV\")" >> $fPath
+fi
