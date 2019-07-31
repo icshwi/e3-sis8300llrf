@@ -23,7 +23,7 @@ dbLoadRecords("sis8300Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_POR
 dbLoadRecords("sis8300noAO.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), AI_NELM=$(AI_SMNM_MAX)")
 dbLoadRecords("sis8300llrf-Register.db", "PREFIX=$(LLRF_PREFIX), ASYN_PORT=$(LLRF_PORT), REG_SCAN=2")
 
-
+iocshLoad "aliasing<iNum>.iocsh"
 epicsThreadSleep(1)
 # Configure the RTM for LLRF
 afterInit("dbpf $(LLRF_PREFIX):RTM 2 > /dev/null")
