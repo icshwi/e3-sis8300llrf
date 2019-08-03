@@ -2,8 +2,13 @@
 
 #Prepare siteApp configuration for IOC instance specific configuration
 siteApp=/iocs/sis8300llrf
-mkdir -p $siteApp/log/
-mkdir -p $siteApp/run/
+
+if [ ! -d $siteApp ]; then
+  sudo mkdir -p "$siteApp"
+fi
+
+sudo chown -R iocuser "$siteApp"
+
 
 cp $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.iocsh $siteApp/llrf.iocsh
 slots_fpga=$(ls /dev/sis8300-* | cut -f2 -d "-")
@@ -13,7 +18,7 @@ if [ ${#slots_fpga} -lt 1 ] ; then
   snippet="epicsEnvSet(\"LLRF_PREFIX\"     \"$LLRF_IOC_NAME\" ) \\\n \
 epicsEnvSet(\"LLRF_SLOT\"       \"<slot>\"    ) \\\n \
 iocshLoad $\(E3_CMD_TOP\)\/llrf.iocsh \\\n \
-iocshLoad $\(E3_CMD_TOP\)\/aliasing1.iocsh \\\n"
+iocshLoad $\(E3_CMD_TOP\)\/config-aliasing1.iocsh \\\n"
   echo "snippet = $snippet"
   eval "sed -e $'s/<snippet>/$snippet/g' < $EPICS_SRC/e3-sis8300llrf/startup/llrf_template.cmd  > $siteApp/llrf.cmd" 
 else
@@ -27,7 +32,7 @@ else
 epicsEnvSet(\"LLRF_PREFIX\"     \"$LLRF_IOC_NAME$i\" ) \\\n \
 epicsEnvSet(\"LLRF_SLOT\"       \"$slot_fpga\"    ) \\\n \
 iocshLoad $\(E3_CMD_TOP\)\/llrf.iocsh \\\n \
-iocshLoad $\(E3_CMD_TOP\)\/aliasing$i.iocsh \\\n"
+iocshLoad $\(E3_CMD_TOP\)\/config-aliasing$i.iocsh \\\n"
     i=$(($i+1))
   done
     #Populate digitiser slot and IOC Name in startup script.
