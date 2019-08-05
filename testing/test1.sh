@@ -82,7 +82,7 @@ echo 'Simulating backplane triggers to FPGA for pulse_coming, pulse_start and pu
 
 for i in `seq 1 50`
 do
-    echo "RF Pulse $i"
+    echo "Beam Pulse $i"
     sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x20
     sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x40
     sis8300drv_reg /dev/sis8300-$slot 0x404 -w 0x80
