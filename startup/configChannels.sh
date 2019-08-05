@@ -37,5 +37,4 @@ if [ ${#chAmp} -gt 0 ]; then
     echo "$template0$chAmp, A=$LLRF_IOC_NAME:AmpPow\")" >> $fPath
     echo "$template0$chAmp-ATT, A=$LLRF_IOC_NAME:AmpPow-ATT\")" >> $fPath
     echo "$template0$chAmp-ATT-RBV, A=$LLRF_IOC_NAME:AmpPow-ATT-RBV\")" >> $fPath
-    echo "test" >> $fPath
 fi
