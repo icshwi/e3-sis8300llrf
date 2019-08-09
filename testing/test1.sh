@@ -68,9 +68,33 @@ do
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
-echo 'Revert to INIT state'
+echo 'Test attenuation on state RESET and after transition from RESET'
+attVal=10
+for i in `seq 0 8`;
+do
+	run "set_att $LLRF_INSTANCE $slot $i $attVal"
+done
 run "state_change $LLRF_INSTANCE RESET"
+echo "Change attenuation on channel 0 to 11"
+caput $LLRF_INSTANCE:AI0-ATT 11 > /dev/null
+
+result1="$(sis8300drv_reg /dev/sis8300-$slot 0xF82)"
+result2="$(sis8300drv_reg /dev/sis8300-$slot 0xF83)"
+result3="$(sis8300drv_reg /dev/sis8300-$slot 0xF84)"
+
+run "check 0x14141414 $result1 'Test attenuator on transition case'"
+run "check 0x14141414 $result2 'Test attenuator on transition case'"
+run "check 0x28 $result3 'Test attenuator on transition case'"
+
 run "state_change $LLRF_INSTANCE INIT"
+result1="$(sis8300drv_reg /dev/sis8300-$slot 0xF82)"
+result2="$(sis8300drv_reg /dev/sis8300-$slot 0xF83)"
+result3="$(sis8300drv_reg /dev/sis8300-$slot 0xF84)"
+
+run "check 0x14141416 $result1 'Test attenuator on transition case'"
+run "check 0x14141414 $result2 'Test attenuator on transition case'"
+run "check 0x28 $result3 'Test attenuator on transition case'"
+
 
 echo '*** Pulse'
 
