@@ -137,10 +137,8 @@ run "state_change $LLRF_INSTANCE RESET"
 run "state_change $LLRF_INSTANCE INIT"
 
 echo '*** Calibration'
-for (( i=0; i<= 9; i++ ))
+for (( i=0; i<= 8; i++ ))
 do
     echo "*Calibration test for channel $i"
     python3 $EPICS_SRC/e3-scaling/scaling/tests/test.py $LLRF_INSTANCE AI$i
 done
-
-
