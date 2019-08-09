@@ -52,7 +52,7 @@ run "state_change $LLRF_INSTANCE INIT"
 
 for i in `seq 0 8`
 do 
-    attVal=$(( 1 + $RANDOM % 31 / (1 + $i / 8) ))
+    attVal=$(($RANDOM % 31 / (1 + $i / 8) ))
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
@@ -64,7 +64,7 @@ run "state_change $LLRF_INSTANCE ON"
 
 for i in `seq 0 8`;
 do
-    attVal=$(( 1 + $RANDOM % 31 / (1 + $i / 8) ))
+    attVal=$(($RANDOM % 31 / (1 + $i / 8) ))
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
