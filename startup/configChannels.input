@@ -1,7 +1,8 @@
-CvtFldCtrl,Cavity Field Ctrl
+CvtFld,Cavity Field
 Refer,Reference
-Cvt1Fwd,Cavity 1 Fwd
-Cvt1Rfl,Cavity 1 Rflct
-Cvt2Fwd,Cavity 2 Fwd
-Cvt2Rfl,Cavity 2 Rflct
+PreAmpFwd,PreAmp Fwd
 PwrAmpFwd,PowerAmp Fwd
+PwrAmpRefl,PowerAmp Refl
+CvtFwd, Cavity Forward
+CvtRfl, Cavity Refl
+VM, Vector Modulator
