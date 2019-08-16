@@ -41,6 +41,12 @@ do
     echo "$template0$i-DECF-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF-RBV\")" >> $fPath
     echo "$template0$i-DECO, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO\")" >> $fPath
     echo "$template0$i-DECO-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO-RBV\")" >> $fPath
+    echo "$template0$i-FileName, A=$LLRF_IOC_NAME$iNum:$pv_name-FileName\")" >> $fPath
+    echo "$template0$i-Slope, A=$LLRF_IOC_NAME$iNum:$pv_name-Slope\")" >> $fPath
+    echo "$template0$i-Offset, A=$LLRF_IOC_NAME$iNum:$pv_name-Offset\")" >> $fPath
+    echo "$template0$i-InputValues, A=$LLRF_IOC_NAME$iNum:$pv_name-InputValues\")" >> $fPath
+    echo "$template0$i-DigitisedValues, A=$LLRF_IOC_NAME$iNum:$pv_name-DigitisedValues\")" >> $fPath
+    echo "$template0$i-FittedLine, A=$LLRF_IOC_NAME$iNum:$pv_name-FittedLine\")" >> $fPath
 
     # set descriptions
     echo "$template1\"A=$LLRF_IOC_NAME$iNum:$pv_name, D=$desc\")" >> $fPathDesc
