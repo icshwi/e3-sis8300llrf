@@ -142,3 +142,6 @@ do
     echo "*Calibration test for channel $i"
     python3 $EPICS_SRC/e3-scaling/scaling/tests/test.py $LLRF_INSTANCE AI$i
 done
+
+echo '*** Filters'
+python3 testFilters.py
