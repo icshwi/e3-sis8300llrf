@@ -6,3 +6,4 @@ PwrAmpRefl,PowerAmp Refl
 CvtFwd, Cavity Forward
 CvtRfl, Cavity Refl
 VM, Vector Modulator
+VMOut, Vector Modulator Out
