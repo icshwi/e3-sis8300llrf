@@ -27,13 +27,12 @@ PV_F_SAMP=":F-SAMPLING"
 PV_N=":IQSMPL-NEARIQN"
 
 
-"""Get then number of a board string
-"""
 def getNumBoard(b):
+    """Get then number of a board string"""
     return int(b.split("-")[1])
 
-"""Return the path to board on system"""
 def getBoard(n = 0):
+    """Return the path to board on system"""
     boards = (glob(BASE_BOARD + "*"))
     boards.sort(key=getNumBoard)
     return (boards[n])
@@ -80,6 +79,7 @@ class TestLowPass(unittest.TestCase):
         return [constA, constB]
 
     def test_enable(self):
+        """Test Low Pass filter enable/disable"""
         system("caput %s %f > /dev/null" % (self.PV + PV_LP_EN, 1))
         res = readReg(self.board, REG_LP3)
 
@@ -91,6 +91,7 @@ class TestLowPass(unittest.TestCase):
         self.assertEqual(res, "0x0")
 
     def test_randValues(self):
+        """Test Low Pass filter with random values"""
         cutoff = random()*10
         fsamp = round(random()*100 + 100, 2)
         n = float(randint(1,10))
@@ -136,8 +137,8 @@ class TestNotch(unittest.TestCase):
 
         return([areal, aimag, breal, bimag])
        
-    # test random values 
     def test_randValues(self):
+        """Test Notch filter with random values"""
         freq = random()*10
         bwidth = random()*10
         fsamp = round(random()*100 + 100, 2)
@@ -168,9 +169,8 @@ class TestNotch(unittest.TestCase):
         reg2 = readReg(self.board, REG_NOTCH2)
         self.assertEqual(str(reg2exp), reg2)
 
-
-    # check if enable works
     def test_enable(self):
+        """Test Notch filter enable/disable"""
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_EN, 1))
         res = readReg(self.board, REG_NOTCH3)
 
@@ -181,7 +181,6 @@ class TestNotch(unittest.TestCase):
 
         self.assertEqual(res, "0x0")
 
-       
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
