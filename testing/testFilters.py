@@ -45,7 +45,7 @@ def readReg(board, reg):
     return ret
 
 
-def flot2Qmn(val, m, n, signed):
+def float2Qmn(val, m, n, signed):
     pow_2_frac_bits = float(0x1 << n)
     pow_2_frac_bits_int_bits = float(0x1 << (m + n))
 
@@ -102,9 +102,9 @@ class TestLowPass(unittest.TestCase):
 
         res = self.calc_consts(cutoff, fsamp, n)
 
-        a = flot2Qmn(res[0], 1, 15, 1)
+        a = float2Qmn(res[0], 1, 15, 1)
         self.assertNotEqual(a, nan)
-        b = flot2Qmn(res[1], 1, 15, 1)
+        b = float2Qmn(res[1], 1, 15, 1)
         self.assertNotEqual(b, nan)
         
         a = hex(a)
@@ -151,13 +151,13 @@ class TestNotch(unittest.TestCase):
 
         res = self.calc_consts(bwidth, freq, fsamp, n)
 
-        areal = flot2Qmn(res[0], 1, 15, 1)
+        areal = float2Qmn(res[0], 1, 15, 1)
         self.assertNotEqual(areal, nan)
-        aimag = flot2Qmn(res[1], 1, 15, 1)
+        aimag = float2Qmn(res[1], 1, 15, 1)
         self.assertNotEqual(aimag, nan)
-        breal = flot2Qmn(res[2], 1, 15, 1)
+        breal = float2Qmn(res[2], 1, 15, 1)
         self.assertNotEqual(breal, nan)
-        bimag = flot2Qmn(res[3], 1, 15, 1)
+        bimag = float2Qmn(res[3], 1, 15, 1)
         self.assertNotEqual(bimag, nan)
 
         reg1exp = hex((areal << 16) | aimag)
