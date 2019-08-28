@@ -145,3 +145,5 @@ done
 
 echo '*** Filters'
 python3 testFilters.py
+echo '*** Control Tables'
+python3 testTables.py
