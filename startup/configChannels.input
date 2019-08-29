@@ -3,7 +3,7 @@ Refer,Reference
 PreAmpFwd,PreAmp Fwd
 PwrAmpFwd,PowerAmp Fwd
 PwrAmpRefl,PowerAmp Refl
-CvtFwd, Cavity Forward
-CvtRfl, Cavity Refl
-VM, Vector Modulator
-VMOut, Vector Modulator Out
+CvtFwd,Cavity Forward
+CvtRfl,Cavity Refl
+VM,Vector Modulator
+VMOut,Vector Modulator Out

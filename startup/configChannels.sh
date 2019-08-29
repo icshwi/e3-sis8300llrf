@@ -31,7 +31,11 @@ i=0
 cat $confFile | while read line
 do
     pv_name=$(echo $line | cut -f 1 -d ,)
-    desc=$(echo $line | cut -f 2 -d ,)
+    desc=$(echo $line | cut -f 2 -d , | sed -e 's/^[ \t]*//')
+    if [ ${#desc} -gt 41 ]; then
+        echo "Warning: Description truncated to char[41] - ${desc:0:40}"
+        desc=${desc:0:40}
+    fi
 
     # set aliases
     echo "$template0$i, A=$LLRF_IOC_NAME$iNum:$pv_name\")" >> $fPath
