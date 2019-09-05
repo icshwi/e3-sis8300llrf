@@ -63,6 +63,13 @@ def float2Qmn(val, m, n, signed):
 
     return val_int64
 
+def caget(pv):
+    p = popen("caget -t %s" % (pv))
+    ret = (p.read()).split('\n')[0]
+    p.close()
+
+    return ret
+
 class TestLowPass(unittest.TestCase):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
@@ -136,14 +143,8 @@ class TestNotch(unittest.TestCase):
         bimag = round((1-exp(-(xi0*omg0*h)))*sin(omg0*h), 12)
 
         return([areal, aimag, breal, bimag])
-       
-    def test_randValues(self):
-        """Test Notch filter with random values"""
-        freq = random()*10
-        bwidth = random()*10
-        fsamp = round(random()*100 + 100, 2)
-        n = float(randint(1,10))
 
+    def checkValues(self, bwidth, freq, fsamp, n):
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_FREQ, freq))
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_BWIDTH, bwidth))
         system("caput %s %f > /dev/null" % (self.PV + PV_F_SAMP, fsamp))
@@ -169,6 +170,18 @@ class TestNotch(unittest.TestCase):
         reg2 = readReg(self.board, REG_NOTCH2)
         self.assertEqual(str(reg2exp), reg2)
 
+       
+    def test_randValues(self):
+        """Test Notch filter with random values"""
+        freq = random()*100
+        while (freq == 0): # avoid 0 values
+            freq = random()*100
+        bwidth = random()*100
+        fsamp = round(random()*100 + 100, 2)
+        n = float(randint(1,10))
+
+        self.checkValues(bwidth, freq, fsamp, n)
+
     def test_enable(self):
         """Test Notch filter enable/disable"""
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_EN, 1))
@@ -180,6 +193,26 @@ class TestNotch(unittest.TestCase):
         res = readReg(self.board, REG_NOTCH3)
 
         self.assertEqual(res, "0x0")
+
+    def test_zeroFreq(self):
+        # get last values from frequency and bandwidth
+        freq_last = float(caget(self.PV + PV_NOTCH_FREQ + "-RBV"))
+        bd_last = float(caget(self.PV + PV_NOTCH_BWIDTH + "-RBV"))
+        # set frequency to zero
+        system("caput %s 0 > /dev/null 2> /dev/null" % (self.PV + PV_NOTCH_FREQ))
+        # check alarm and rbv pv
+        alarm = caget(self.PV + PV_NOTCH_FREQ + ".STAT") + " " + caget(self.PV + PV_NOTCH_FREQ + ".SEVR")
+        self.assertEqual(alarm, "WRITE INVALID")
+        freq_cur = float(caget(self.PV + PV_NOTCH_FREQ + "-RBV"))
+        bd_cur = float(caget(self.PV + PV_NOTCH_BWIDTH + "-RBV"))
+        self.assertEqual(freq_last, freq_cur)
+        self.assertEqual(bd_last, bd_cur)
+        # check registers
+        fsamp = float(caget(self.PV + PV_F_SAMP))
+        n = float(caget(self.PV + PV_N))
+        self.checkValues(bd_last, freq_last, fsamp, n)
+        # call testRandValues -> set a valid value
+        self.test_randValues() 
 
 
 if __name__ == "__main__":
