@@ -75,6 +75,8 @@ class TestLowPass(unittest.TestCase):
         super().__init__(*args, **kw)
         self.board = getBoard()
         self.PV = environ.get("LLRF_IOC_NAME") + "1"
+        # set N to value != 0 to ensure there is no error state
+        system("caput %s %f > /dev/null" % (self.PV + PV_N, 1))
 
     def calc_consts(self, cutoff, fsamp, n):
         omg0 = 2*pi*cutoff 
@@ -130,6 +132,9 @@ class TestNotch(unittest.TestCase):
         self.board = getBoard()
         # TODO: after fix LLRF_IOC_NAME change this
         self.PV = environ.get("LLRF_IOC_NAME") + "1"
+        # set N and freq to value != 0 to ensure there is no error state
+        system("caput %s %f > /dev/null" % (self.PV + PV_N, 1))
+        system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_FREQ, 1))
 
     # calculate and return constants from Notch
     def calc_consts(self, bd, freq, fsamp, n):
