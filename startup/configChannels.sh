@@ -5,10 +5,22 @@ if [ $# -ne 2 ]; then
     exit
 fi
 
+installPath=/iocs/sis8300llrf
+
+if [ ! -d $installPath ]; then
+    echo "Folder $installPath not found!"
+    exit
+fi
+
+if [ ! -w $installPath ]; then
+    echo "You cannot write on $installPath !"
+    exit
+fi
+
+
 iNum=$1
 confFile=$2
 
-installPath=/iocs/sis8300llrf
 
 fPath=$installPath/config-aliasing$iNum.iocsh
 fPathDesc=$installPath/config-desc$iNum.iocsh
