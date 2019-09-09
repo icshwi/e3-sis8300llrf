@@ -41,6 +41,26 @@ echo 'Disable VM'
 caput $LLRF_INSTANCE:VMENBL 0 > /dev/null
 run "check 0x600 $(sis8300drv_reg /dev/sis8300-$slot 0x12F) 'Test on Disable VM'"
 
+
+echo '*** Enable Channels'
+caput $LLRF_INSTANCE:AI-ENBL-CH 1 > /dev/null
+result="$(caget -t $LLRF_INSTANCE:AI0-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 0 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI1-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 1 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI2-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 2 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI3-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 3 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI4-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 5 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI6-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 7 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI8-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 8 is Enable on PV'"
+result="$(caget -t $LLRF_INSTANCE:AI9-ENBL-RBV)"
+run "check Enabled $result 'Check if channel 9 is Enable on PV'"
+
 echo '*** Attenuation Parameters'
 echo 'Test in INIT state'
 
