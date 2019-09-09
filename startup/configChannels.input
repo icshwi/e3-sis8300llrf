@@ -1,9 +1,10 @@
-CvtFld,Cavity Field
-Refer,Reference
-PreAmpFwd,PreAmp Fwd
-PwrAmpFwd,PowerAmp Fwd
-PwrAmpRefl,PowerAmp Refl
-CvtFwd,Cavity Forward
-CvtRfl,Cavity Refl
-VM,Vector Modulator
-VMOut,Vector Modulator Out
+#channel num, PV name, description
+0,CvtFld,Cavity Field
+1,Refer,Reference
+2,PreAmpFwd,PreAmp Fwd
+3,PwrAmpFwd,PowerAmp Fwd
+4,PwrAmpRefl,PowerAmp Refl
+5,CvtFwd,Cavity Forward
+6,CvtRfl,Cavity Refl
+7,VM,Vector Modulator
+8,VMOut,Vector Modulator Out
