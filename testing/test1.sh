@@ -56,6 +56,12 @@ do
 	run "set_att $LLRF_INSTANCE $slot $i $attVal"
 done
 
+echo 'Test attenuation on channel 9'
+
+caput $LLRF_INSTANCE:AI9-ATT $attVal > /dev/null
+result="$(caget -t $LLRF_INSTANCE:AI9-ATT-RBV)"
+run "check 0 $result 'Test attenuator on channel 9'"
+
 echo 'Test attenuation setting in ON state'
 
 run "state_change $LLRF_INSTANCE RESET"
