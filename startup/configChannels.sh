@@ -54,24 +54,27 @@ do
     # If alias is the same as channel, doesn't set alias
     if [ $pv_name != "AI$ch" ]; then
         echo "# Board $iNum, Channel $ch = $pv_name" >> $fPath
+        oPrefix="$template0$ch"
+        aPrefix="$LLRF_IOC_NAME:$pv_name"
+        
         # set aliases
-        echo "$template0$ch, A=$LLRF_IOC_NAME$iNum:$pv_name\")" >> $fPath
-        echo "$template0$ch-ATT, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT\")" >> $fPath
-        echo "$template0$ch-ATT-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT-RBV\")" >> $fPath
-        echo "$template0$ch-DECF, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF\")" >> $fPath
-        echo "$template0$ch-DECF-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF-RBV\")" >> $fPath
-        echo "$template0$ch-DECO, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO\")" >> $fPath
-        echo "$template0$ch-DECO-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO-RBV\")" >> $fPath
-        echo "$template0$ch-FileName, A=$LLRF_IOC_NAME$iNum:$pv_name-FileName\")" >> $fPath
-        echo "$template0$ch-Slope, A=$LLRF_IOC_NAME$iNum:$pv_name-Slope\")" >> $fPath
-        echo "$template0$ch-Offset, A=$LLRF_IOC_NAME$iNum:$pv_name-Offset\")" >> $fPath
-        echo "$template0$ch-InputValues, A=$LLRF_IOC_NAME$iNum:$pv_name-InputValues\")" >> $fPath
-        echo "$template0$ch-DigitisedValues, A=$LLRF_IOC_NAME$iNum:$pv_name-DigitisedValues\")" >> $fPath
-        echo "$template0$ch-FittedLine, A=$LLRF_IOC_NAME$iNum:$pv_name-FittedLine\")" >> $fPath
+        echo "$oPrefix, A=$aPrefix\")" >> $fPath
+        echo "$oPrefix-ATT, A=$aPrefix-ATT\")" >> $fPath
+        echo "$oPrefix-ATT-RBV, A=$aPrefix-ATT-RBV\")" >> $fPath
+        echo "$oPrefix-DECF, A=$aPrefix-DECF\")" >> $fPath
+        echo "$oPrefix-DECF-RBV, A=$aPrefix-DECF-RBV\")" >> $fPath
+        echo "$oPrefix-DECO, A=$aPrefix-DECO\")" >> $fPath
+        echo "$oPrefix-DECO-RBV, A=$aPrefix-DECO-RBV\")" >> $fPath
+        echo "$oPrefix-FileName, A=$aPrefix-FileName\")" >> $fPath
+        echo "$oPrefix-Slope, A=$aPrefix-Slope\")" >> $fPath
+        echo "$oPrefix-Offset, A=$aPrefix-Offset\")" >> $fPath
+        echo "$oPrefix-InputValues, A=$aPrefix-InputValues\")" >> $fPath
+        echo "$oPrefix-DigitisedValues, A=$aPrefix-DigitisedValues\")" >> $fPath
+        echo "$oPrefix-FittedLine, A=$aPrefix-FittedLine\")" >> $fPath
     fi
 
     # set descriptions
-    echo "$template1\"A=$LLRF_IOC_NAME$iNum:$pv_name, D=$desc\")" >> $fPathDesc
+    echo "$template1\"A=$LLRF_IOC_NAME:pv_name, D=$desc\")" >> $fPathDesc
 
 done
 } < $confFile
