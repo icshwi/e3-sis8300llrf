@@ -51,6 +51,7 @@ do
         desc=${desc:0:40}
     fi
 
+    echo "# Board $iNum, Channel $ch = $pv_name" >> $fPath
     # set aliases
     echo "$template0$ch, A=$LLRF_IOC_NAME$iNum:$pv_name\")" >> $fPath
     echo "$template0$ch-ATT, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT\")" >> $fPath
