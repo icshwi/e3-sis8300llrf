@@ -51,21 +51,24 @@ do
         desc=${desc:0:40}
     fi
 
-    echo "# Board $iNum, Channel $ch = $pv_name" >> $fPath
-    # set aliases
-    echo "$template0$ch, A=$LLRF_IOC_NAME$iNum:$pv_name\")" >> $fPath
-    echo "$template0$ch-ATT, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT\")" >> $fPath
-    echo "$template0$ch-ATT-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT-RBV\")" >> $fPath
-    echo "$template0$ch-DECF, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF\")" >> $fPath
-    echo "$template0$ch-DECF-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF-RBV\")" >> $fPath
-    echo "$template0$ch-DECO, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO\")" >> $fPath
-    echo "$template0$ch-DECO-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO-RBV\")" >> $fPath
-    echo "$template0$ch-FileName, A=$LLRF_IOC_NAME$iNum:$pv_name-FileName\")" >> $fPath
-    echo "$template0$ch-Slope, A=$LLRF_IOC_NAME$iNum:$pv_name-Slope\")" >> $fPath
-    echo "$template0$ch-Offset, A=$LLRF_IOC_NAME$iNum:$pv_name-Offset\")" >> $fPath
-    echo "$template0$ch-InputValues, A=$LLRF_IOC_NAME$iNum:$pv_name-InputValues\")" >> $fPath
-    echo "$template0$ch-DigitisedValues, A=$LLRF_IOC_NAME$iNum:$pv_name-DigitisedValues\")" >> $fPath
-    echo "$template0$ch-FittedLine, A=$LLRF_IOC_NAME$iNum:$pv_name-FittedLine\")" >> $fPath
+    # If alias is the same as channel, doesn't set alias
+    if [ $pv_name != "AI$ch" ]; then
+        echo "# Board $iNum, Channel $ch = $pv_name" >> $fPath
+        # set aliases
+        echo "$template0$ch, A=$LLRF_IOC_NAME$iNum:$pv_name\")" >> $fPath
+        echo "$template0$ch-ATT, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT\")" >> $fPath
+        echo "$template0$ch-ATT-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-ATT-RBV\")" >> $fPath
+        echo "$template0$ch-DECF, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF\")" >> $fPath
+        echo "$template0$ch-DECF-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECF-RBV\")" >> $fPath
+        echo "$template0$ch-DECO, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO\")" >> $fPath
+        echo "$template0$ch-DECO-RBV, A=$LLRF_IOC_NAME$iNum:$pv_name-DECO-RBV\")" >> $fPath
+        echo "$template0$ch-FileName, A=$LLRF_IOC_NAME$iNum:$pv_name-FileName\")" >> $fPath
+        echo "$template0$ch-Slope, A=$LLRF_IOC_NAME$iNum:$pv_name-Slope\")" >> $fPath
+        echo "$template0$ch-Offset, A=$LLRF_IOC_NAME$iNum:$pv_name-Offset\")" >> $fPath
+        echo "$template0$ch-InputValues, A=$LLRF_IOC_NAME$iNum:$pv_name-InputValues\")" >> $fPath
+        echo "$template0$ch-DigitisedValues, A=$LLRF_IOC_NAME$iNum:$pv_name-DigitisedValues\")" >> $fPath
+        echo "$template0$ch-FittedLine, A=$LLRF_IOC_NAME$iNum:$pv_name-FittedLine\")" >> $fPath
+    fi
 
     # set descriptions
     echo "$template1\"A=$LLRF_IOC_NAME$iNum:$pv_name, D=$desc\")" >> $fPathDesc
