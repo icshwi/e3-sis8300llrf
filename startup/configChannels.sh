@@ -74,7 +74,7 @@ do
     fi
 
     # set descriptions
-    echo "$template1\"A=$LLRF_IOC_NAME:pv_name, D=$desc\")" >> $fPathDesc
+    echo "$template1\"A=$LLRF_IOC_NAME$iNum:AI$ch, D=$desc\")" >> $fPathDesc
 
 done
 } < $confFile
