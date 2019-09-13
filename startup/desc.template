@@ -1,3 +1,0 @@
-record("*", "$(A)"){
-    field(DESC, "$(D)")
-}
