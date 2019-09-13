@@ -2,7 +2,7 @@
 iocshLoad $(E3_CMD_TOP)/timing.iocsh
 
 epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES" "16777300")
-require sis8300llrf, 3.10.9
+require sis8300llrf, 3.11.0
 ndsSetTraceLevel 3
 
 <snippet>
