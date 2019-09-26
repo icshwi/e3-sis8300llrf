@@ -26,9 +26,14 @@ where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
+REQ=calc
 
 ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
+endif
+
+ifneq ($(strip $(CALC_DEP_VERSION)),)
+calc_VERSION=$(CALC_DEP_VERSION)
 endif
 
 ifneq ($(strip $(LOKI_DEP_VERSION)),)
