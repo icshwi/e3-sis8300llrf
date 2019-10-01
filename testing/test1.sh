@@ -136,6 +136,12 @@ echo 'Revert to INIT state'
 run "state_change $LLRF_INSTANCE RESET"
 run "state_change $LLRF_INSTANCE INIT"
 
+echo 'Test enable channel 9'
+caput $LLRF_INSTANCE:AI9-ENBL 1 > /dev/null
+result="$(caget -t $LLRF_INSTANCE:AI9-ENBL-RBV.STAT)"
+run "check NO_ALARM $result 'Test enable channel 9'"
+caput $LLRF_INSTANCE:AI9-ENBL 0 > /dev/null
+
 echo '*** Calibration'
 for (( i=0; i<= 8; i++ ))
 do
