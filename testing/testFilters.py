@@ -63,6 +63,13 @@ def float2Qmn(val, m, n, signed):
 
     return val_int64
 
+def getFSamp(pv):
+    p = popen("caget -t -f 12 %s" % (pv))
+    fsamp = p.read().split("\n")[0]
+    p.close()
+    return float(fsamp)
+
+
 class TestLowPass(unittest.TestCase):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
@@ -93,11 +100,11 @@ class TestLowPass(unittest.TestCase):
     def test_randValues(self):
         """Test Low Pass filter with random values"""
         cutoff = random()*10
-        fsamp = round(random()*100 + 100, 2)
         n = float(randint(1,10))
 
+        fsamp = getFSamp(self.PV + PV_F_SAMP)
+
         system("caput %s %f > /dev/null" % (self.PV + PV_LP_CUTOFF, cutoff))
-        system("caput %s %f > /dev/null" % (self.PV + PV_F_SAMP, fsamp))
         system("caput %s %f > /dev/null" % (self.PV + PV_N, n))
 
         res = self.calc_consts(cutoff, fsamp, n)
@@ -141,12 +148,12 @@ class TestNotch(unittest.TestCase):
         """Test Notch filter with random values"""
         freq = random()*10
         bwidth = random()*10
-        fsamp = round(random()*100 + 100, 2)
         n = float(randint(1,10))
+
+        fsamp = getFSamp(self.PV + PV_F_SAMP)
 
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_FREQ, freq))
         system("caput %s %f > /dev/null" % (self.PV + PV_NOTCH_BWIDTH, bwidth))
-        system("caput %s %f > /dev/null" % (self.PV + PV_F_SAMP, fsamp))
         system("caput %s %f > /dev/null" % (self.PV + PV_N, n))
 
         res = self.calc_consts(bwidth, freq, fsamp, n)
