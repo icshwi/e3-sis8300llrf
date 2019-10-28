@@ -1,1 +1,0 @@
-[ "$1" = "$2" ] && echo "Pass" || echo "***Fail on test '$3': result = $2***" 1>&2
