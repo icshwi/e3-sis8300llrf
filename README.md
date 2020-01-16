@@ -3,14 +3,8 @@ e3-sis8300llrf
 ======
 ESS Site-specific EPICS module : sis8300llrf
 
-## Startup scripts
+## Running the IOC and timing support
 
-* To deploy this IOC as service use the script startup/deployServiceIOC.sh :
-`sudo ./deployServiceIOC.sh <e3 source directory> <epics base directory> <epics require version> <IOC name>`
+The repository https://gitlab.esss.lu.se/icshwi/llrf-deployment-tools.git provides tooling to set up IOC and associated timing support.
 
-This deploy script will correctly if boards are already connected and recognized by the OS
-
-The IOC will then run on boot of the system. Alternatively for manual initiation the startup script for the system can be found at /epics/iocs/sis8300llrf/llrf.cmd
-
-## Timing support
-This EPICS module provides basic timing support by the instantiation of the timing_template.iocsh code snippet. This snippet is instantiated with the correct PCIe enumeration of the EVR available on the bus if one is present. Soft sequencer functionality is provided via the tr-sequencer.sh script where and event generator is not present. This script should be run after IOC initialisation to start the soft sequence of timing events internally in the EVR.
+# NOTE - The tooling in llrf-deployment-tools is valid only for the latest software release of sis8300llrf module. Backwards compatibility to older sis8300llrf modules is by design not supported.
