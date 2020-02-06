@@ -1,0 +1,82 @@
+
+# Tests runned on 20-02-06 at TIGER
+
+============================= test session starts ==============================
+platform linux -- Python 3.6.7, pytest-5.2.2, py-1.8.0, pluggy-0.13.0 -- /usr/bin/python3.6
+cachedir: .pytest_cache
+Modules versions: 
+require - 3.1.2
+devlib2 - 2.9.0
+mrfioc2 - 2.2.0-rc8
+asyn - 4.36.0
+loki - 1.0.0
+nds - 2.3.4
+sis8300drv - 4.8.0
+scaling - 1.6.2
+sis8300 - 2.9.3
+sis8300llrfdrv - 5.5.1
+sis8300llrf - 3.14.3
+
+rootdir: /home/iocuser/e3-clean/e3-sis8300llrf/m-epics-sis8300llrf/test, inifile: pytest.ini
+collecting ... collected 58 items
+
+test_params.py::test_params[/dev/sis8300-4-LLRF-TIGER] PASSED            [  1%]
+test_ai_channels.py::TestAIChannels::test_en_all[LLRF-TIGER] PASSED      [  3%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-0] PASSED [  5%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-1] PASSED [  6%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-2] PASSED [  8%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-3] PASSED [ 10%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-4] PASSED [ 12%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-5] PASSED [ 13%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-6] PASSED [ 15%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-7] PASSED [ 17%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-8] PASSED [ 18%]
+test_ai_channels.py::TestAIChannels::test_acq[/dev/sis8300-4-LLRF-TIGER-9] PASSED [ 20%]
+test_ai_channels.py::TestAIChannels::test_dis_01[LLRF-TIGER] PASSED      [ 22%]
+test_ai_channels.py::TestAIChannels::test_dis_29[LLRF-TIGER] PASSED      [ 24%]
+test_other.py::TestVM::test_output_en[/dev/sis8300-4-LLRF-TIGER] PASSED  [ 25%]
+test_other.py::TestVM::test_output_dis[/dev/sis8300-4-LLRF-TIGER] PASSED [ 27%]
+test_other.py::TestState::test_states[LLRF-TIGER] PASSED                 [ 29%]
+test_triggers.py::TestSimBPTrig::test_bp_trig[/dev/sis8300-4-LLRF-TIGER-50] PASSED [ 31%]
+test_triggers.py::TestSimBPTrig::test_bp_trig[/dev/sis8300-4-LLRF-TIGER-49] PASSED [ 32%]
+test_triggers.py::TestSimBPTrig::test_bp_trig[/dev/sis8300-4-LLRF-TIGER-9] PASSED [ 34%]
+test_attenuation.py::TestAttenuation::test_init[/dev/sis8300-4-LLRF-TIGER] PASSED [ 36%]
+test_attenuation.py::TestAttenuation::test_on[/dev/sis8300-4-LLRF-TIGER] PASSED [ 37%]
+test_attenuation.py::TestAttenuation::test_after_reset[/dev/sis8300-4-LLRF-TIGER] PASSED [ 39%]
+test_lp.py::TestLowPass::test_enable[/dev/sis8300-4-LLRF-TIGER] PASSED   [ 41%]
+test_lp.py::TestLowPass::test_rand_values[/dev/sis8300-4-LLRF-TIGER] PASSED [ 43%]
+test_lp.py::TestNotch::test_enable[/dev/sis8300-4-LLRF-TIGER] PASSED     [ 44%]
+test_lp.py::TestNotch::test_rand_values[/dev/sis8300-4-LLRF-TIGER] PASSED [ 46%]
+test_tables.py::TestTablesNormal::test_tables_sp_qi[/dev/sis8300-4-LLRF-TIGER] PASSED [ 48%]
+test_tables.py::TestTablesNormal::test_tables_ff_qi[/dev/sis8300-4-LLRF-TIGER] PASSED [ 50%]
+test_tables.py::TestTablesSpecial::test_tables_sp_mag_ang[/dev/sis8300-4-LLRF-TIGER] PASSED [ 51%]
+test_tables.py::TestTablesSpecial::test_tables_ff_mag_ang[/dev/sis8300-4-LLRF-TIGER] PASSED [ 53%]
+test_tables.py::TestTablesSpecial::test_tables_sp_qi[/dev/sis8300-4-LLRF-TIGER] PASSED [ 55%]
+test_tables.py::TestTablesSpecial::test_tables_ff_qi[/dev/sis8300-4-LLRF-TIGER] PASSED [ 56%]
+test_decimation.py::TestDecimation::test_dec_rbv[LLRF-TIGER] PASSED      [ 58%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-0] PASSED     [ 60%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-1] PASSED     [ 62%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-2] PASSED     [ 63%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-3] PASSED     [ 65%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-4] PASSED     [ 67%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-5] PASSED     [ 68%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-6] PASSED     [ 70%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-7] PASSED     [ 72%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-8] PASSED     [ 74%]
+test_decimation.py::TestDecimation::test_dec_ch[LLRF-TIGER-9] PASSED     [ 75%]
+test_decimation.py::TestDecimation::test_ai_size[/dev/sis8300-4-LLRF-TIGER] PASSED [ 77%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-0] PASSED                 [ 79%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-1] PASSED                 [ 81%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-2] PASSED                 [ 82%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-3] PASSED                 [ 84%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-4] PASSED                 [ 86%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-5] PASSED                 [ 87%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-6] PASSED                 [ 89%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-7] PASSED                 [ 91%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-8] PASSED                 [ 93%]
+test_xax.py::TestXAxis::test_xax_ch[LLRF-TIGER-9] PASSED                 [ 94%]
+test_iq_samp.py::TestIQSampling::test_mn_rbv[LLRF-TIGER] PASSED          [ 96%]
+test_iq_samp.py::TestIQSampling::test_cav_inp[LLRF-TIGER] PASSED         [ 98%]
+test_iq_samp.py::TestIQSampling::test_iq_ang_off[LLRF-TIGER] PASSED      [100%]
+
+======================== 58 passed in 139.59s (0:02:19) ========================
