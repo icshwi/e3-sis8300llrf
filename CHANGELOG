@@ -1,0 +1,11 @@
+# 3.14.3
+
+## New features
+* Support to firmware 0.5.0 
+* Check firmware version (the IOC will not work with older firmwares)
+* Add new tests
+* Add support for VMoutput DC offsetting
+* Test results available on repository (tests.out)
+
+## Bug fixes
+* Forces sis8300Device to restore all values when enter on Init state
