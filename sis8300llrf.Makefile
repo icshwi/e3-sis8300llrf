@@ -54,7 +54,7 @@ endif
 
 # print cc1plus: warning: unrecognized command line option ‘-Wno-format-truncation’ with lower gcc 7
 USR_CFLAGS   += -Wno-format-truncation
-USR_CPPFLAGS += -Wno-format-truncation
+USR_CPPFLAGS += -Wno-format-truncation -std=c++11
 
 
 
