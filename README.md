@@ -1,6 +1,6 @@
 # Deprecation notice
 
-2020-08-21: This remote has been deprecated. Moved to https://gitlab.esss.lu.se/e3/llrf/e3-sis8300llrf
+2020-08-21: There is an intention to deprecate this repository in the future. For now users should continue to use this repo. Any changes will be announced to the users by email by Thomas Fay or Gabriel Fedel.
 
 e3-sis8300llrf  
 ======
